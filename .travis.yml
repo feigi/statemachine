@@ -1,0 +1,16 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+before_install:
+  - wget http://apache.claz.org/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+  - tar zxvf apache-maven-3.3.9-bin.tar.gz
+  - chmod +x apache-maven-3.3.9/bin/mvn
+  - export M2_HOME=$PWD/apache-maven-3.3.9
+  - export PATH=$PWD/apache-maven-3.3.9/bin:${PATH}
+  - hash -r
+
+addons:
+  code_climate:
+    repo_token: 8cfa231f0500fcc336a35ad0d6a854320cf7e8ceb1f2b76df6e4f235993f1ab2
