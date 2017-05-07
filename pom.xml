@@ -44,7 +44,6 @@
 
     <modules>
         <module>core</module>
-        <module>testing</module>
         <module>spring</module>
     </modules>
 
