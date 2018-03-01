@@ -58,9 +58,14 @@ public interface Statemachine {
      */
     void sendEvent(Object event, Object object, Object eventData);
 
-    Object getState();
-
-    void setState(Object state);
+    /**
+     * Statemachine implementations have to override this in order to provide the current state which is assumed to be held on the object
+     * put on the Context.
+     *
+     * @param object The context object.
+     * @return Current state of the actual state machine.
+     */
+    Object getCurrentState(Object object);
 
     /**
      * Translates a string representing a state into its object value.

@@ -30,23 +30,18 @@ public class TestSm extends StatemachineBean<TestState, TestEvent, TestObject> {
     public void defineGenericActions(GenericActionConfigurer<TestObject> genericActionConfigurer) {
         genericActionConfigurer.on(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
                 .execute(Action.of(context -> context.getDataFor(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
-                        .ifPresent(testState -> setState(testState.getToState()))))
+                        .ifPresent(stateChange -> setCurrentState(context.getObject(), (TestState) stateChange.getToState()))))
                 .add();
     }
 
     @Override
-    protected TestState getCurrentState(TestObject object) {
-        return object.getState();
+    public Object getCurrentState(Object object) {
+        return ((TestObject) object).getState();
     }
 
     @Override
-    public Object getState() {
-        return context.get().getObject().getState();
-    }
-
-    @Override
-    public void setState(Object state) {
-        context.get().getObject().setState((TestState) state);
+    public void setCurrentState(TestObject object, TestState state) {
+        object.setState(state);
     }
 
     @Override

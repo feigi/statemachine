@@ -435,18 +435,11 @@ public abstract class AbstractStatemachine<S, E, O> implements Statemachine {
     }
 
     private State<S, E, O> getCurrentState() {
-        S currentState = getCurrentState(getContext().getObject());
+        S currentState = (S) getCurrentState(getContext().getObject());
         return getState(currentState);
     }
 
-    /**
-     * Statemachine implementations have to override this in order to provide the current state which is assumed to be held on the object
-     * put on the Context (type O).
-     *
-     * @param object The context object.
-     * @return Current state of the actual state machine.
-     */
-    protected abstract S getCurrentState(O object);
+    protected abstract void setCurrentState(O object, S state);
 
     /**
      * Hook method which should return an object which is considered the final state of the statemachine implementation.

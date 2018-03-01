@@ -35,28 +35,23 @@ public class TestStatemachine extends AbstractStatemachine<TestState, TestEvent,
     }
 
     @Override
+    protected void setCurrentState(TestObject object, TestState state) {
+        object.setCurrentState(state);
+    }
+
+    @Override
     public TestEvent getEventFromString(String eventName) {
         return null;
     }
 
     @Override
-    public TestState getState() {
-        return context.get().getObject().getCurrentState();
-    }
-
-    @Override
-    public void setState(Object state) {
-        context.get().getObject().setCurrentState(((TestState) state));
+    public TestState getCurrentState(Object object) {
+        return ((TestObject) object).getCurrentState();
     }
 
     @Override
     public TestState getStateFromString(String StateName) {
         return null;
-    }
-
-    @Override
-    protected TestState getCurrentState(TestObject object) {
-        return object.getCurrentState();
     }
 
     @Override
