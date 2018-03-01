@@ -6,5 +6,5 @@ package de.core_concepts.statemachine;
 @FunctionalInterface
 public interface ProcessStep {
 
-  void execute(Context context);
+    void execute(Context context);
 }

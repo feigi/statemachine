@@ -6,9 +6,9 @@ package de.core_concepts.statemachine;
  */
 public class TransitionException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public TransitionException(String message) {
-    super(message);
-  }
+    public TransitionException(String message) {
+        super(message);
+    }
 }

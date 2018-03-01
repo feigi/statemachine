@@ -23,7 +23,9 @@ import static java.util.stream.Collectors.toSet;
 public class TransitionConfigurer<S, E, O> {
 
     private final Predicate<Context<O>> defaultGuard = context -> true;
-
+    private final Map<S, State<S, E, O>> states;
+    private final S initalState;
+    private final S finalState;
     private State<S, E, O> to;
     private Set<State<S, E, O>> from;
     private E event;
@@ -33,10 +35,6 @@ public class TransitionConfigurer<S, E, O> {
     private boolean fromAll = false;
     private Set<S> excluding = new HashSet<>();
     private boolean toSelf = false;
-
-    private final Map<S, State<S, E, O>> states;
-    private final S initalState;
-    private final S finalState;
 
     TransitionConfigurer(Map<S, State<S, E, O>> states, S initalState, S finalState) {
         Validate.notNull(initalState, "initialState can not be null.");

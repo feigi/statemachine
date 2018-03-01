@@ -11,52 +11,61 @@ import static de.core_concepts.statemachine.spring.TestState.STATE2;
  */
 public class TestSm extends StatemachineBean<TestState, TestEvent, TestObject> {
 
-  public TestSm() {
-    super(TestState.class, TestEvent.class, TestObject.class);
-  }
+    public TestSm() {
+        super(TestState.class, TestEvent.class, TestObject.class);
+    }
 
-  @Override
-  public void defineStates(StateConfigurer<TestState, TestEvent, TestObject> state) {
-    state.withId(STATE1).add();
-    state.withId(STATE2).add();
-  }
+    @Override
+    public void defineStates(StateConfigurer<TestState, TestEvent, TestObject> state) {
+        state.withId(STATE1).add();
+        state.withId(STATE2).add();
+    }
 
-  @Override
-  public void defineTransitions(TransitionConfigurer<TestState, TestEvent, TestObject> transition) {
-    transition.from(STATE1).to(STATE2).onEvent(EVENT1).add();
-  }
+    @Override
+    public void defineTransitions(TransitionConfigurer<TestState, TestEvent, TestObject> transition) {
+        transition.from(STATE1).to(STATE2).onEvent(EVENT1).add();
+    }
 
-  @Override
-  public void defineGenericActions(GenericActionConfigurer<TestObject> genericActionConfigurer) {
-    genericActionConfigurer.on(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
-        .execute(Action.of(context -> context.getDataFor(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
-            .map(o -> (TestState) o)
-            .ifPresent(testState -> context.getObject().setState(testState))))
-        .add();
-  }
+    @Override
+    public void defineGenericActions(GenericActionConfigurer<TestObject> genericActionConfigurer) {
+        genericActionConfigurer.on(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
+                .execute(Action.of(context -> context.getDataFor(LifecycleEvent.SUCCESSFUL_STATE_CHANGE)
+                        .ifPresent(testState -> setState(testState.getToState()))))
+                .add();
+    }
 
-  @Override
-  protected TestState getCurrentState(TestObject object) {
-    return object.getState();
-  }
+    @Override
+    protected TestState getCurrentState(TestObject object) {
+        return object.getState();
+    }
 
-  @Override
-  public TestState getStateFromString(String stateName) {
-    return TestState.valueOf(stateName);
-  }
+    @Override
+    public Object getState() {
+        return context.get().getObject().getState();
+    }
 
-  @Override
-  public TestEvent getEventFromString(String eventName) {
-    return TestEvent.valueOf(eventName);
-  }
+    @Override
+    public void setState(Object state) {
+        context.get().getObject().setState((TestState) state);
+    }
 
-  @Override
-  protected TestState getFinalState() {
-    return TestState.START;
-  }
+    @Override
+    public TestState getStateFromString(String stateName) {
+        return TestState.valueOf(stateName);
+    }
 
-  @Override
-  protected TestState getInitialState() {
-    return TestState.END;
-  }
+    @Override
+    public TestEvent getEventFromString(String eventName) {
+        return TestEvent.valueOf(eventName);
+    }
+
+    @Override
+    protected TestState getFinalState() {
+        return TestState.START;
+    }
+
+    @Override
+    protected TestState getInitialState() {
+        return TestState.END;
+    }
 }

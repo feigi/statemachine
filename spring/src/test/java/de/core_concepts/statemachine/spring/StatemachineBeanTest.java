@@ -33,7 +33,7 @@ public class StatemachineBeanTest {
     private PlatformTransactionManager transactionManager;
 
     @Mock(answer = Answers.RETURNS_MOCKS)
-    private SmBeanFactory bf;
+    private SmBeanRegistry bf;
 
     @Spy
     @InjectMocks

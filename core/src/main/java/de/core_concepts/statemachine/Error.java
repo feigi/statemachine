@@ -7,5 +7,5 @@ package de.core_concepts.statemachine;
 @FunctionalInterface
 public interface Error {
 
-  String getId();
+    String getId();
 }

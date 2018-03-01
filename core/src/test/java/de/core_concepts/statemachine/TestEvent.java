@@ -15,10 +15,10 @@ package de.core_concepts.statemachine;
 
 /**
  * Event Enum for AbstractStatemachineTest
- *
+ * <p>
  * Created by zieglerch on 03.12.2015.
  */
 
 public enum TestEvent {
-  EVENT1, EVENT2
+    EVENT1, EVENT2
 }

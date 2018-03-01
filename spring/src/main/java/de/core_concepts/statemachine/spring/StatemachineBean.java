@@ -21,16 +21,16 @@ import static org.springframework.transaction.TransactionDefinition.PROPAGATION_
 @Component
 public abstract class StatemachineBean<S, E, O> extends AbstractStatemachine<S, E, O> {
 
+    static final ThreadLocal<TransactionStatus> currentTransaction = new ThreadLocal<>();
+
     /**
      * Use this to obtain regular Action beans using a component name.
      */
     @Autowired
-    protected SmBeanFactory bf;
+    protected SmBeanRegistry registry;
 
     @Autowired(required = false)
     private PlatformTransactionManager transactionManager;
-
-    static final ThreadLocal<TransactionStatus> currentTransaction = new ThreadLocal<>();
 
     /**
      * @param stateType  The class object for the state type S.
